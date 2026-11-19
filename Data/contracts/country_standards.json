@@ -1,0 +1,43 @@
+{
+  "active_country": "US",
+  "countries": {
+    "US": {
+      "standard_name": "AASHTO / MUTCD (United States)",
+      "lane_width_m": 3.66,
+      "dashed_line_length_m": 3.05,
+      "dashed_gap_length_m": 9.14,
+      "line_width_m": 0.15,
+      "scale_px_per_m": 20.0,
+      "safety_margin_m": 0.30,
+      "default_speed_limit_kmh": 60.0,
+      "min_moving_speed_kmh": 20.0,
+      "congestion_speed_kmh": 10.0,
+      "safe_thw_sec": 1.8,
+      "vehicle_lengths_m": {
+        "motorbike": 2.1,
+        "car": 4.7,
+        "bus": 12.0,
+        "truck": 10.0
+      }
+    },
+    "VN": {
+      "standard_name": "QCVN 41:2024/BGTVT & TCVN 13592:2022 (Vietnam)",
+      "lane_width_m": 3.50,
+      "dashed_line_length_m": 2.00,
+      "dashed_gap_length_m": 6.00,
+      "line_width_m": 0.15,
+      "scale_px_per_m": 20.0,
+      "safety_margin_m": 0.30,
+      "default_speed_limit_kmh": 50.0,
+      "min_moving_speed_kmh": 20.0,
+      "congestion_speed_kmh": 10.0,
+      "safe_thw_sec": 1.8,
+      "vehicle_lengths_m": {
+        "motorbike": 2.0,
+        "car": 4.5,
+        "bus": 10.0,
+        "truck": 8.5
+      }
+    }
+  }
+}

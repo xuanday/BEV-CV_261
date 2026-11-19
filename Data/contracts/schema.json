@@ -1,0 +1,81 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://btl-cv-bev-yolo26/contracts/schema.json",
+  "title": "TracksStreamRecord",
+  "description": "Data contract for each JSONL record in tracks_stream.jsonl exchanged between Person A (Perception & MOT) and Person B (Geometry, BEV & Spatial Analytics).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "camera_id",
+    "frame_id",
+    "timestamp_ms",
+    "fps",
+    "track_id",
+    "class_id",
+    "class_name",
+    "conf",
+    "bbox_xyxy",
+    "footpoint_uv"
+  ],
+  "properties": {
+    "camera_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Unique identifier of the camera source (e.g., hcmc_city_new_4, hanoi_vntraffic_01)."
+    },
+    "frame_id": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Zero-based or non-negative frame index in the video stream."
+    },
+    "timestamp_ms": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Frame timestamp in milliseconds from the start of the video."
+    },
+    "fps": {
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "description": "Video frame rate in frames per second (> 0)."
+    },
+    "track_id": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Persistent multi-object tracking identifier (>= 0)."
+    },
+    "class_id": {
+      "type": "integer",
+      "enum": [0, 1, 2, 3],
+      "description": "Standardized 4-class vehicle ID: 0=motorbike, 1=car, 2=bus, 3=truck."
+    },
+    "class_name": {
+      "type": "string",
+      "enum": ["motorbike", "car", "bus", "truck"],
+      "description": "Standardized 4-class vehicle name matching class_id."
+    },
+    "conf": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "description": "Detection/tracking confidence score in [0.0, 1.0]."
+    },
+    "bbox_xyxy": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {
+        "type": "number"
+      },
+      "description": "Bounding box in pixel coordinates [x1, y1, x2, y2]."
+    },
+    "footpoint_uv": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "type": "number"
+      },
+      "description": "Ground contact point at bottom-center of bbox [(x1 + x2) / 2, y2] in pixel coordinates."
+    }
+  }
+}
