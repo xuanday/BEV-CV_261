@@ -1,0 +1,59 @@
+camera_id: luvizon_subset01
+source: Luvizon, Nassu, Minetto - Vehicle Speed Dataset (UTFPR), subset01; github.com/dluvizon/vehicle-dsm
+image_size:
+- 1920
+- 1080
+fps: 30.15
+notes: 'H_rect is the middle-lane rectifying homography from dataset/matrix.txt of the dataset repository. It maps image pixels
+  to a rectified plane that is metric up to one factor s (metres per rectified unit). H below = diag(s, s, 1) @ H_rect with
+  s fitted on video01 (scripts/eval_luvizon.py, outputs/luvizon/scale.json); video02 is the held-out test.
+
+  '
+calibration:
+  H_rect:
+  - - 0.45887539
+    - 0.70749354
+    - 337.20050049
+  - - 0.03581188
+    - 1.72447097
+    - -7.71867371
+  - - -4.267e-05
+    - 0.00108679
+    - 1.0
+  middle_lane_uv:
+  - - 599
+    - 9
+  - - 962
+    - 8
+  - - 519
+    - 1071
+  - - 1349
+    - 1067
+  H:
+  - - 0.0076365832
+    - 0.0117740751
+    - 5.6116752903
+  - - 0.0005959797
+    - 0.0286985669
+    - -0.1284538145
+  - - -4.267e-05
+    - 0.00108679
+    - 1.0
+  scale_m_per_unit: 0.01664195
+bev:
+  px_per_m: 20
+  x_range:
+  - 6.0
+  - 18.0
+  y_range:
+  - -1.0
+  - 17.0
+measure_zone_uv:
+- - 222
+  - 20
+- - 1307
+  - 20
+- - 1919
+  - 1079
+- - 0
+  - 1079

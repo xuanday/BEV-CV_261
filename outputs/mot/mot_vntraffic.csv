@@ -1,0 +1,5 @@
+tracker,MOTA,IDF1,HOTA~,IDSW,FP,FN,MT,GT_ids,gt_reading,proc_fps_cpu
+bytetrack_vn,0.5768,0.6973,0.5302,23,1723,5040,40,85,GT offset +0 (estimated),2.54
+bytetrack_vn,0.5124,0.6636,0.5112,24,2239,5556,27,85,GT offset -1 (old loader),2.54
+botsort_vn,0.5947,0.7078,0.5506,21,1634,4844,42,85,GT offset +0 (estimated),2.42
+botsort_vn,0.5286,0.6734,0.5281,21,2164,5374,29,85,GT offset -1 (old loader),2.42

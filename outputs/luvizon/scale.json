@@ -1,0 +1,13 @@
+{
+  "tracks": "yolo26_vn_finetuned_bytetrack_vn",
+  "scale_from": null,
+  "lane_width_units": 188.2118353537753,
+  "s_lane_m_per_unit": 0.01859606752902213,
+  "s_fit_m_per_unit": 0.01664195421469861,
+  "s_fit_iqr": [
+    0.016481648519322684,
+    0.01713513660387499
+  ],
+  "n_fit": 65,
+  "implied_lane_width_m": 3.132212746621922
+}
