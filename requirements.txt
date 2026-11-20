@@ -1,0 +1,14 @@
+ultralytics>=8.4.100
+opencv-python>=4.8
+numpy
+pandas
+scipy
+pyyaml
+matplotlib
+lap
+motmetrics
+jsonschema
+imageio-ffmpeg
+nbformat
+nbconvert
+ipykernel

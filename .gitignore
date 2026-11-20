@@ -3,3 +3,10 @@ docs/
 __pycache__/
 .ipynb_checkpoints/
 *.pyc
+.venv/
+# large inputs, fetched by scripts
+Data/luvizon/
+Data/danang/
+weights/yolo26s.pt
+outputs/trackers/
+outputs/**/dashboard_full.mp4
