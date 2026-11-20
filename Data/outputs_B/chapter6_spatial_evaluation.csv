@@ -1,7 +1,0 @@
-﻿Thước đo (Metric),Giá trị đo được,Ngưỡng mục tiêu,Trạng thái
-Reprojection RMSE (AICC22 - US),0.872 px (0.048 m),< 3.0 px (< 0.25 m),PASS
-Độ ổn định bề rộng làn BEV (3 lát cắt),3.66m / 3.66m / 3.66m,3.66 m (±0.15m),PASS
-Sai số đo tốc độ (MAE / MAPE),MAE=0.67 km/h | MAPE=4.44%,MAPE <= 8 - 10%,PASS
-Sai số đếm lưu lượng qua vạch ảo,0.00% (5/5),<= 5.0%,PASS
-Precision bắt sai làn (Trước -> Sau Debouncing),1.000 -> 1.000,>= 0.90,PASS
-Video Render (Transform & Dashboard),2 MP4 (200 frames @ 10.0 FPS),Đọc lại đủ 200 frames,PASS

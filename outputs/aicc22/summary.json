@@ -1,0 +1,8 @@
+{
+  "gt_frame_offset": -1,
+  "reference_vehicles": 13,
+  "reference_speed_median_kmh": 32.80444145659808,
+  "gt_counted_stop_bar": 1,
+  "reference_moving_mean_kmh": 28.61332388215328,
+  "old_geometry_moving_mean_kmh": 14.803903211490985
+}
