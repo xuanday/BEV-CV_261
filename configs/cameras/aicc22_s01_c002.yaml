@@ -1,0 +1,48 @@
+camera_id: aicc22_s01_c002
+source: AICC22-Custom (Zenodo 18195750) = AI City Challenge CityFlow S01/c002 resized
+  to 1280x720
+reference: Calibration from AI City Challenge calibration.txt (GPS homography, reported
+  reprojection error 11.4 px at 1080p)
+image_size:
+- 1280
+- 720
+fps: 10.0
+calibration:
+  H:
+  - - 1.4346526239
+    - -3.3227710263
+    - -911.6722410315
+  - - 0.0407312941
+    - -20.235863008
+    - 2738.5682598698
+  - - -0.0027798459
+    - -0.1923744797
+    - 1.0
+bev:
+  px_per_m: 10
+  x_range:
+  - 0.0
+  - 29.0
+  y_range:
+  - 0.0
+  - 88.0
+measure_zone_uv:
+- - 450.0
+  - 140.0
+- - 920.0
+  - 140.0
+- - 1260.0
+  - 718.0
+- - 40.0
+  - 718.0
+tripwires:
+- id: stop_bar
+  p1:
+  - 2.0
+  - 48.46
+  p2:
+  - 26.9
+  - 48.46
+  direction:
+  - 0.0
+  - 1.0

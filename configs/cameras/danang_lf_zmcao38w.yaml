@@ -1,0 +1,100 @@
+camera_id: danang_lf_zmcao38w
+source: HuggingFace nhthau/CCTV-giao-thong-da-nang, LF_ZmCAo38w_C001..C003 (same fixed
+  camera)
+reference: Two vanishing points + Fortuner width 1.855 m, see scripts/make_danang_config.py
+notes: 'approximate calibration: f=5037px (HFOV 21.6 deg), camera height 4.9 m; centre-line
+  segment length vs f: {''f x0.8'': 11.71, ''f x1.0'': 14.46, ''f x1.25'': 17.88}'
+image_size:
+- 1920
+- 1080
+fps: 30.0
+calibration:
+  H:
+  - - 0.0352723201
+    - 0.0068908226
+    - -12.1162495371
+  - - -0.0089385998
+    - 0.4567321225
+    - -121.1892457749
+  - - -0.0002094032
+    - 0.00724352
+    - 1.0
+  vanishing_points:
+    f_px: 5036.773309973261
+    hfov_deg: 21.582088806359003
+    camera_height_m: 4.887619897869749
+    vp_road:
+    - 368.4
+    - -127.4
+    vp_cross:
+    - 43198.0
+    - 1110.8
+bev:
+  px_per_m: 10
+  x_range:
+  - 0.0
+  - 16.0
+  y_range:
+  - 0.0
+  - 43.0
+measure_zone_uv:
+- - 600.0
+  - 300.0
+- - 1450.0
+  - 300.0
+- - 1919.0
+  - 760.0
+- - 1919.0
+  - 1040.0
+- - 380.0
+  - 1040.0
+lanes:
+- id: away
+  name: right half (traffic moving away from the camera)
+  polygon_m:
+  - - 5.808827978915932
+    - 0.0
+  - - 14.322003159252132
+    - 0.0
+  - - 14.322003159252132
+    - 41.45119968691322
+  - - 5.808827978915932
+    - 41.45119968691322
+  direction:
+  - 0.0
+  - -1.0
+- id: towards
+  name: left half (towards the camera, parking strip on the far left)
+  polygon_m:
+  - - 0.0
+    - 0.0
+  - - 5.808827978915932
+    - 0.0
+  - - 5.808827978915932
+    - 41.45119968691322
+  - - 0.0
+    - 41.45119968691322
+  direction:
+  - 0.0
+  - 1.0
+tripwires:
+- id: away
+  p1:
+  - 5.808827978915932
+  - 34.207129580634096
+  p2:
+  - 14.322003159252132
+  - 34.207129580634096
+  direction:
+  - 0.0
+  - -1.0
+- id: towards
+  p1:
+  - 0.0
+  - 34.207129580634096
+  p2:
+  - 5.808827978915932
+  - 34.207129580634096
+  direction:
+  - 0.0
+  - 1.0
