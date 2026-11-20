@@ -1,0 +1,7 @@
+video,split,geometry,gt_vehicles,measured,coverage_%,MAE_kmh,RMSE_kmh,bias_kmh,MAPE_%,within_-3_+2_%,tracks
+v01,fit (train),old pipeline (default trapezoid),110,26,23.636,110.514,116.738,110.514,321.379,0.0,yolo26s_bytetrack_vn
+v01,fit (train),dataset H + lane width 3.5 m (s=0.01860),110,94,85.455,5.031,5.553,4.838,10.844,18.085,yolo26s_bytetrack_vn
+v01,fit (train),dataset H + factor fitted on v01 (s=0.01664),110,94,85.455,1.116,1.493,-0.283,3.368,89.362,yolo26s_bytetrack_vn
+v02,test,old pipeline (default trapezoid),280,47,16.786,100.643,111.147,100.643,289.064,0.0,yolo26s_bytetrack_vn
+v02,test,dataset H + lane width 3.5 m (s=0.01860),280,214,76.429,5.645,6.109,5.206,12.141,12.15,yolo26s_bytetrack_vn
+v02,test,dataset H + factor fitted on v01 (s=0.01664),280,214,76.429,1.215,1.919,-0.104,3.758,88.785,yolo26s_bytetrack_vn

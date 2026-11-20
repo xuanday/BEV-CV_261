@@ -8,5 +8,5 @@ __pycache__/
 Data/luvizon/
 Data/danang/
 weights/yolo26s.pt
-outputs/trackers/
+outputs/**/trackers/
 outputs/**/dashboard_full.mp4
