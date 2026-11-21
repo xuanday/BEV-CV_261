@@ -44,7 +44,7 @@ Chạy được trên CPU (YOLO26s 640 px khoảng 3–4 frame/s); GPU nhanh hơ
 | Luvizon et al. (UTFPR) subset01 video01/02 | **Đánh giá tốc độ** với GT vòng từ (km/h từng xe) | `python scripts/get_luvizon.py` (~1.7 GB, Google Drive của tác giả) |
 | AICC22-Custom (= AI City S01/c002, 1280×720, 10 fps) | Hiệu chuẩn độc lập (GPS), tốc độ theo khung GT | có sẵn trong `Data/VnTraffic/AICC22-Custom` |
 | VNTraffic Hà Nội (510 frame, 30 fps) | MOTA / IDF1 / HOTA | có sẵn trong `Data/VnTraffic/VNTraffic` |
-| CCTV Đà Nẵng `nhthau/CCTV-giao-thong-da-nang` | Cảnh thực VN, phân tích không gian | HuggingFace (cần đăng nhập, dataset gated); tracks đã chạy nằm trong `outputs/tracks/` |
+| CCTV Đà Nẵng `nhthau/CCTV-giao-thong-da-nang` (C001–C003) | Cảnh thực VN, phân tích không gian | HuggingFace (dataset gated: xin quyền trên trang dataset rồi `huggingface_hub.login()`); tracks đã chạy nằm trong `outputs/tracks/` |
 | Vietnamese Vehicles (Kaggle `duongtran1909`) | Huấn luyện detector | xem notebook A |
 
 ## Chạy lại
@@ -64,7 +64,9 @@ python scripts/eval_aicc22.py              # AICC22: sai số hình học vs sai
 python scripts/eval_mot.py                 # VNTraffic: ByteTrack vs BoT-SORT
 
 # 4) phân tích một camera bất kỳ
-python scripts/analyse_tracks.py --tracks outputs/tracks/tracks_danang_cam_01.jsonl \
+python scripts/track.py --video Data/danang/LF_ZmCAo38w_C001.mp4 --camera danang_c001 \
+       --weights weights/yolo26s.pt --coco --tracker botsort_vn --imgsz 960 --stride 2
+python scripts/analyse_tracks.py --tracks outputs/tracks/tracks_danang_c001_yolo26s_botsort_vn.jsonl \
        --camera configs/cameras/danang_lf_zmcao38w.yaml --background outputs/calib/danang_bg.jpg
 ```
 
@@ -85,6 +87,9 @@ detector + tracker gây 2.9 km/h/xe.
 **Tracking – VNTraffic:** BoT-SORT MOTA 0.595, IDF1 0.708, HOTA~ 0.551 (ByteTrack thấp hơn một chút).
 Notebook A đọc GT lệch một frame (frame − 1) nên báo MOTA thấp hơn khoảng 0.06; số ở trên tính bằng `scripts/eval_mot.py`.
 
+**CCTV Đà Nẵng (không có GT, 3 đoạn × 2 phút):** YOLO26s COCO theo được 59–65 track đi > 5 m mỗi đoạn, đếm 10–16 xe/phút;
+model fine-tune chỉ 5–11 track và 2–4 xe/phút, ô tô bị gán "truck"/"bus".
+
 **Detector – test set ảnh VN (1.922 ảnh, cụm cảnh chưa thấy):** mAP50 0.791, mAP50-95 0.463.
 
 Chi tiết và biểu đồ: `Pipeline_Evaluation.ipynb`, `B/B_Geometry_BEV_Analytics.ipynb`, thư mục `outputs/`.
@@ -101,6 +106,6 @@ Bản trước dùng một hình thang chọn tay và gán kích thước "3 là
 Trên AICC22, hình thang đó thực tế dài khoảng 66 m, trên Luvizon làm tốc độ sai khoảng 3 lần.
 
 ## Hạn chế
-- Detector fine-tune trên ảnh Việt Nam bỏ sót nhiều ô tô ở cảnh Đà Nẵng và gộp box ở cảnh Luvizon (xe rất gần camera); đây là nguồn sai số lớn nhất còn lại.
+- Detector fine-tune trên ảnh Việt Nam bỏ sót nhiều ô tô ở cảnh Đà Nẵng (model COCO tốt hơn nhiều ở camera này) và gộp box ở cảnh Luvizon (xe rất gần camera); đây là nguồn sai số lớn nhất còn lại.
 - Hiệu chuẩn Đà Nẵng dựa trên giả định (điểm ảnh vuông, tâm ảnh ở giữa, bề rộng một mẫu xe), nên tốc độ ở camera này chỉ là ước lượng.
 - Homography giả định mặt đường phẳng; footpoint là trung điểm cạnh đáy bbox nên lệch với xe quay ngang.

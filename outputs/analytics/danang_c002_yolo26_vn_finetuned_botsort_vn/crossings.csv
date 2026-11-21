@@ -1,0 +1,5 @@
+track_id,tripwire,cls,frame_id,t
+11,towards,motorbike,966,32.2
+48,towards,bus,2938,97.933333
+64,towards,car,3430,114.333333
+66,towards,truck,3460,115.333333

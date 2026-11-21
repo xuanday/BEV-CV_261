@@ -1,0 +1,4 @@
+track_id,lane,cls,kind,duration_s
+1,towards,car,wrong_way,1.13
+231,away,motorbike,wrong_way,0.87
+244,towards,car,wrong_way,1.27

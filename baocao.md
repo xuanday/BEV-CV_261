@@ -38,7 +38,7 @@ mặt phẳng đường bằng homography để đo bằng mét và giây.
 | Luvizon et al. (UTFPR), subset01 video01–02 | 1920×1080, 30.15 fps; 6.918 + 14.837 frame; 110 + 280 xe có tốc độ | Tốc độ từng xe đo bằng vòng từ | **Đánh giá tốc độ** |
 | AICC22-Custom (Zenodo 18195750) = AI City S01/c002 | 1280×720, 10 fps, 200 frame | bbox + ID; hiệu chuẩn GPS của AI City | Hiệu chuẩn độc lập, tách sai số |
 | VNTraffic (Zenodo 18195750), Quang Trung – Lê Trọng Tấn | 1920×1080, 30 fps, 510 frame, 85 ID | bbox + ID | MOTA / IDF1 / HOTA |
-| CCTV Đà Nẵng (`nhthau/CCTV-giao-thong-da-nang`) | 3 đoạn × 30 s, 1920×1080 | không có | Cảnh thực Việt Nam |
+| CCTV Đà Nẵng (`nhthau/CCTV-giao-thong-da-nang`) | 3 đoạn C001–C003 × 2 phút, 1920×1080, 30 fps | không có | Cảnh thực Việt Nam |
 
 Ghi chú: các bộ Roboflow trong notebook A không được tải khi chạy (thiếu API key), nên detector chỉ học trên dữ liệu Kaggle.
 
@@ -171,14 +171,26 @@ Cả hai tracker chưa đạt mục tiêu IDF1 ≥ 0.75 và HOTA ≥ 0.60 nhóm 
 
 ### 6.4 CCTV Đà Nẵng
 
-| Đoạn | Track | Track trong vùng đo | Đi > 5 m | Box bị loại (mép/gộp) | Đếm qua vạch | Tốc độ TB khi chạy (km/h) | Cặp xe THW < 1.8 s | Vi phạm làn |
-|---|---|---|---|---|---|---|---|---|
-| cam_01 | 104 | 82 | 6 | 893 | 4 | 10.1 | 6 | 2 |
-| cam_02 | 52 | 36 | 1 | 1046 | 1 | 9.0 | 0 | 0 |
-| cam_03 | 144 | 107 | 8 | 1036 | 9 | 13.3 | 12 | 1 |
+Chạy lại tracking trên video gốc (trọn 2 phút mỗi đoạn, lấy 1 frame / 2, ảnh vào 960 px, BoT-SORT) với hai detector,
+cùng hiệu chuẩn và cùng vạch đếm. Hàng "Colab" là tracks của bản nộp trước (fine-tune 640 px, ByteTrack, 30 s đầu).
 
-Số xe đếm được thấp hơn nhiều so với lượng xe trong video: detector bỏ sót phần lớn ô tô ở góc camera này, xe con hay bị gán "truck",
-track bị vỡ (trung vị 6–8 frame). Ở camera này, giới hạn chính là detector, không phải hình học.
+| Detector | Đoạn | Thời lượng | Track | Đi > 5 m | Đếm qua vạch | Xe/phút | Theo lớp | Tốc độ TB (km/h) | Cặp THW < 1.8 s | Vi phạm làn |
+|---|---|---|---|---|---|---|---|---|---|---|
+| Colab (fine-tune 640) | C001 | 30 s | 104 | 6 | 4 | 8.0 | 4 xe máy | 10.1 | 6 | 2 |
+| Colab (fine-tune 640) | C002 | 30 s | 52 | 1 | 1 | 2.0 | 1 bus | 9.0 | 0 | 0 |
+| Colab (fine-tune 640) | C003 | 30 s | 144 | 8 | 9 | 18.0 | 5 truck, 2 bus, 1 car, 1 xe máy | 13.3 | 12 | 1 |
+| fine-tune 960 | C001 | 2 phút | 57 | 10 | 8 | 4.0 | 6 xe máy, 1 bus, 1 truck | 10.5 | 5 | 2 |
+| fine-tune 960 | C002 | 2 phút | 48 | 5 | 4 | 2.0 | 1 xe máy, 1 bus, 1 car, 1 truck | 10.2 | 1 | 0 |
+| fine-tune 960 | C003 | 2 phút | 74 | 11 | 5 | 2.5 | 2 truck, 2 xe máy, 1 car | 13.6 | 2 | 0 |
+| **YOLO26s COCO 960** | C001 | 2 phút | 210 | 62 | 21 | 10.5 | 16 xe máy, 4 car, 1 truck | 10.1 | 17 | 2 |
+| **YOLO26s COCO 960** | C002 | 2 phút | 199 | 59 | 21 | 10.5 | 17 xe máy, 4 car | 10.7 | 20 | 3 |
+| **YOLO26s COCO 960** | C003 | 2 phút | 282 | 65 | 32 | 16.0 | 22 xe máy, 10 car | 10.4 | 24 | 5 |
+
+Model fine-tune gán phần lớn ô tô ở camera này thành "truck"/"bus" và gần như không theo được xe ở xa (0–1 track đi qua đoạn 10–15 m),
+tăng ảnh vào lên 960 px không cải thiện. Model COCO cho số track đi > 5 m gấp 6–12 lần và nhận đúng ô tô.
+Dời vạch đếm từ 10 m đến 34 m dọc đường, số track cắt qua gần như không đổi (17–22 mỗi đoạn với COCO), nên vị trí vạch không phải nguyên nhân.
+Tốc độ trung bình khoảng 10 km/h, khớp với biển giới hạn 5 km/h và trạm thu phí ở cuối đường. Không có GT nên chưa biết tỉ lệ bỏ sót còn lại.
+Video minh hoạ: `outputs/videos/danang_c003_dashboard.mp4` (60 s đầu của C003, COCO 960).
 
 ### 6.5 So với bản nộp trước
 
@@ -192,12 +204,12 @@ track bị vỡ (trung vị 6–8 frame). Ở camera này, giới hạn chính l
 | MOT VNTraffic | GT lệch 1 frame | Đánh giá lại bằng `scripts/eval_mot.py`, offset ước lượng từ dữ liệu |
 | THW | Đếm theo (frame × cặp) | Một sự kiện cho mỗi cặp xe |
 | Đếm xe | Không xét hướng | Theo hướng, mỗi xe một lần |
-| Video | 450 / 900 frame | AICC22 đủ 200 frame; Luvizon 30 s minh hoạ; tracks đầy đủ trong outputs/tracks |
+| Video | 450 / 900 frame | AICC22 đủ 200 frame; Luvizon 30 s, Đà Nẵng 60 s minh hoạ; tracks đầy đủ trong outputs/tracks |
 
 ## 7. Ca thất bại, hạn chế, hướng phát triển
 
 1. **Detector lệch miền.** Model học trên ảnh Việt Nam (nhiều xe máy) gộp box và gán sai lớp ở cảnh Luvizon (xe con rất gần camera) và bỏ sót ô tô ở Đà Nẵng.
-   Model COCO cho kết quả tương đương hoặc tốt hơn trên ô tô (6.1, 6.2). Hướng sửa: thêm ảnh CCTV góc cao vào tập train, hoặc kết hợp hai model.
+   Model COCO cho kết quả tương đương hoặc tốt hơn trên ô tô (6.1, 6.2), và ở Đà Nẵng theo được nhiều xe hơn 6–12 lần (6.4). Hướng sửa: thêm ảnh CCTV góc cao vào tập train, hoặc kết hợp hai model.
 2. **Hiệu chuẩn gần đúng.** Đà Nẵng dựa trên giả định điểm ảnh vuông, tâm ảnh ở giữa và kích thước một mẫu xe; điểm tụ ngang đường nằm rất xa nên f nhạy với sai số đo.
    Cần đo vài khoảng cách thực tế hoặc dùng ảnh vệ tinh để có điểm kiểm tra.
 3. **Mặt đường phẳng và điểm chạm đất.** Homography giả định đường phẳng. Với xe quay ngang hoặc xe dài, trung điểm cạnh đáy bbox không trùng tâm vệt bánh xe;

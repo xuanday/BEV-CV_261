@@ -1,0 +1,22 @@
+{
+  "camera_id": "danang_lf_zmcao38w",
+  "frames": 3599,
+  "records": 20736,
+  "tracks": 282,
+  "tracks_in_zone": 197,
+  "tracks_moved_5m": 65,
+  "edge_boxes": 3086,
+  "counted": 32,
+  "counts_by_tripwire": {
+    "away": 19,
+    "towards": 14
+  },
+  "counts_by_class": {
+    "motorbike": 22,
+    "car": 10
+  },
+  "speed_moving_mean_kmh": 10.374609207169486,
+  "speed_moving_p85_kmh": 16.23275280585186,
+  "lane_violations": 5,
+  "thw_pairs": 24
+}
