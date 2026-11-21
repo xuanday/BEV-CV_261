@@ -83,7 +83,7 @@ python scripts/analyse_tracks.py --tracks outputs/tracks/tracks_danang_cam_01.js
 detector + tracker gây 2.9 km/h/xe.
 
 **Tracking – VNTraffic:** BoT-SORT MOTA 0.595, IDF1 0.708, HOTA~ 0.551 (ByteTrack thấp hơn một chút).
-Bản trước đọc GT lệch một frame nên báo MOTA thấp hơn khoảng 0.06.
+Notebook A đọc GT lệch một frame (frame − 1) nên báo MOTA thấp hơn khoảng 0.06; số ở trên tính bằng `scripts/eval_mot.py`.
 
 **Detector – test set ảnh VN (1.922 ảnh, cụm cảnh chưa thấy):** mAP50 0.791, mAP50-95 0.463.
 

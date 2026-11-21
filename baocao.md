@@ -90,7 +90,7 @@ Vùng đo được giới hạn để bỏ phần gần đường chân trời.
 Nhãn được ánh xạ về 4 lớp (motorbike, car, bus, truck), bỏ box < 8 px, lọc ảnh gần trùng bằng SSIM (≥ 0.97). Ảnh được gom theo cụm cảnh
 (tiền tố tên file, ví dụ `cam_18`), cả cụm đi vào cùng một tập, nên các frame liên tiếp của một camera không lọt sang tập khác.
 Kết quả: train 11.946, val 1.029, test 1.922 ảnh. Khi chia, miền ban đêm có quá ít cụm nên phép làm tròn cho 0 cụm val
-(tập "nighttime_val" rỗng, chưa đánh giá được ban đêm). Code đã sửa để mỗi miền có ít nhất một cụm val, nhưng chưa chạy lại vì cần GPU.
+(tập "nighttime_val" rỗng, chưa đánh giá được ban đêm). Cần đảm bảo mỗi miền có ít nhất một cụm val rồi train lại (cần GPU).
 
 ### 4.2 YOLO26s hai giai đoạn (Colab, NVIDIA L4)
 Giai đoạn 1: 50 epoch từ `yolo26s.pt`, AdamW lr0 = 0.005, cosine, batch 40, mosaic 0.8 (tắt 10 epoch cuối), giữ đầu NMS (`nms=True`, `max_det=500`).
@@ -165,7 +165,8 @@ chiếu qua **cùng** homography sai, nên lỗi hình học triệt tiêu. Offs
 | BoT-SORT | offset 0 (ước lượng) | 0.595 | 0.708 | 0.551 | 21 | 1634 | 4844 |
 | BoT-SORT | frame − 1 (cách cũ) | 0.529 | 0.673 | 0.528 | 21 | 2164 | 5374 |
 
-GT VNTraffic đánh số frame từ 0 (IoU khớp nhất ở offset 0). Cách đọc cũ trừ 1 làm lệch một frame và hạ MOTA khoảng 0.06.
+GT VNTraffic đánh số frame từ 0 (IoU khớp nhất ở offset 0). Notebook A đọc GT với frame − 1, lệch một frame nên MOTA thấp hơn khoảng 0.06;
+hàng "offset 0" tính bằng `scripts/eval_mot.py` trên cùng file tracks.
 Cả hai tracker chưa đạt mục tiêu IDF1 ≥ 0.75 và HOTA ≥ 0.60 nhóm tự đặt; FN chiếm phần lớn lỗi, tức detector bỏ sót xe máy trong cụm đông.
 
 ### 6.4 CCTV Đà Nẵng
@@ -188,7 +189,7 @@ track bị vỡ (trung vị 6–8 frame). Ở camera này, giới hạn chính l
 | GT tốc độ Luvizon | Trung bình cả video (3.8–8.3 phút) so với 350 frame đầu | Ghép từng xe theo frame |
 | Sai số tốc độ Luvizon | 69–72 km/h (video01) | xem 6.1 |
 | "Human GT" AICC22/VNTraffic | GT chiếu qua cùng H, MAE ≈ 0.1 km/h | Tham chiếu độc lập (GPS) |
-| MOT VNTraffic | GT lệch 1 frame | Offset ước lượng từ dữ liệu |
+| MOT VNTraffic | GT lệch 1 frame | Đánh giá lại bằng `scripts/eval_mot.py`, offset ước lượng từ dữ liệu |
 | THW | Đếm theo (frame × cặp) | Một sự kiện cho mỗi cặp xe |
 | Đếm xe | Không xét hướng | Theo hướng, mỗi xe một lần |
 | Video | 450 / 900 frame | AICC22 đủ 200 frame; Luvizon 30 s minh hoạ; tracks đầy đủ trong outputs/tracks |
@@ -202,4 +203,4 @@ track bị vỡ (trung vị 6–8 frame). Ở camera này, giới hạn chính l
 3. **Mặt đường phẳng và điểm chạm đất.** Homography giả định đường phẳng. Với xe quay ngang hoặc xe dài, trung điểm cạnh đáy bbox không trùng tâm vệt bánh xe;
    có thể dùng YOLO-OBB hoặc segmentation để lấy đường tiếp xúc chính xác hơn.
 4. **Dữ liệu đánh giá ngắn.** AICC22 chỉ có 200 frame (13 xe chạy), VNTraffic 510 frame; kết quả mang tính minh hoạ.
-5. **Chưa đánh giá detector ban đêm** (tập val đêm rỗng, đã sửa code chia tập nhưng chưa train lại).
+5. **Chưa đánh giá detector ban đêm** (tập val đêm rỗng do làm tròn số cụm khi chia tập; cần sửa cách chia và train lại).
